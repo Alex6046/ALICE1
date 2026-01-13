@@ -47,11 +47,11 @@ if (isset($_SESSION['error'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ALICE | Student Dashboard</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-    
+
     <style>
         body {
             font-family: 'Poppins', sans-serif;
-            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
                         url('https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?auto=format&fit=crop&w=1600&q=80');
             background-size: cover;
             background-position: center;
@@ -319,12 +319,12 @@ if (isset($_SESSION['error'])) {
         $upcomingResult = $upcomingQuery->get_result();
         $upcomingCount = $upcomingResult->fetch_assoc()['total'];
         ?>
-        
+
         <div class="stat-card">
             <h4>Total Registered Events</h4>
             <h2><?php echo $registeredCount; ?></h2>
         </div>
-        
+
         <div class="stat-card">
             <h4>Upcoming Events</h4>
             <h2><?php echo $upcomingCount; ?></h2>
@@ -416,7 +416,7 @@ if (isset($_SESSION['error'])) {
         $feedbackEventsQuery->bind_param("ssi", $username, $email, $user_id);
         $feedbackEventsQuery->execute();
         $feedbackEventsResult = $feedbackEventsQuery->get_result();
-        
+
         // Get recent public feedback
         $publicFeedbackQuery = $conn->prepare("
             SELECT ef.*, e.title as event_title, u.username, 
@@ -431,9 +431,9 @@ if (isset($_SESSION['error'])) {
         $publicFeedbackQuery->execute();
         $publicFeedbackResult = $publicFeedbackQuery->get_result();
         ?>
-        
+
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 20px;">
-            
+
             <!-- Left Column: Events needing feedback -->
             <div>
                 <h3 style="color: white; margin-bottom: 15px;">Events Awaiting Your Feedback</h3>
@@ -459,7 +459,7 @@ if (isset($_SESSION['error'])) {
                     </div>
                 <?php endif; ?>
             </div>
-            
+
             <!-- Right Column: Recent public feedback -->
             <div>
                 <h3 style="color: white; margin-bottom: 15px;">Recent Reviews</h3>
@@ -484,7 +484,7 @@ if (isset($_SESSION['error'])) {
                                         </span>
                                     </div>
                                 </div>
-                                
+
                                 <?php if (!empty($feedback['feedback_text'])): ?>
                                     <div style="background: #161b22; padding: 10px; border-radius: 6px; margin-bottom: 10px;">
                                         <p style="margin: 0; color: #e6edf3; font-style: italic;">
@@ -492,7 +492,7 @@ if (isset($_SESSION['error'])) {
                                         </p>
                                     </div>
                                 <?php endif; ?>
-                                
+
                                 <div style="display: flex; justify-content: space-between; align-items: center;">
                                     <span style="color: #94a3b8; font-size: 0.85rem;">
                                         By <?php echo htmlspecialchars($feedback['display_name']); ?>
@@ -511,7 +511,7 @@ if (isset($_SESSION['error'])) {
                     </div>
                 <?php endif; ?>
             </div>
-            
+
         </div>
     </section>
 
@@ -535,7 +535,7 @@ if (isset($_SESSION['error'])) {
             <h2 style="margin: 0; color: white;">Submit Event Feedback</h2>
             <button onclick="closeFeedbackModal()" style="background: none; border: none; color: #94a3b8; font-size: 1.5rem; cursor: pointer;">×</button>
         </div>
-        
+
         <form id="feedbackForm" method="POST" action="submit_feedback.php">
             <div style="margin-bottom: 20px;">
                 <label style="display: block; margin-bottom: 8px; color: #94a3b8;">Select Event to Review</label>
@@ -556,17 +556,17 @@ if (isset($_SESSION['error'])) {
                     $allEventsQuery->bind_param("ssi", $username, $email, $user_id);
                     $allEventsQuery->execute();
                     $allEventsResult = $allEventsQuery->get_result();
-                    
+
                     while ($event = $allEventsResult->fetch_assoc()) {
-                        echo '<option value="' . $event['id'] . '">' 
-                             . htmlspecialchars($event['title']) 
-                             . ' (' . date("M d, Y", strtotime($event['date'])) . ')' 
+                        echo '<option value="' . $event['id'] . '">'
+                             . htmlspecialchars($event['title'])
+                             . ' (' . date("M d, Y", strtotime($event['date'])) . ')'
                              . '</option>';
                     }
                     ?>
                 </select>
             </div>
-            
+
             <div style="margin-bottom: 20px;">
                 <label style="display: block; margin-bottom: 8px; color: #94a3b8;">Rating (1-5 stars)</label>
                 <div style="display: flex; justify-content: center; gap: 10px; margin-bottom: 10px;">
@@ -577,18 +577,18 @@ if (isset($_SESSION['error'])) {
                 <input type="hidden" name="rating" id="ratingInput" required>
                 <div id="ratingText" style="text-align: center; color: #94a3b8; margin-top: 5px;">Click stars to rate</div>
             </div>
-            
+
             <div style="margin-bottom: 20px;">
                 <label style="display: block; margin-bottom: 8px; color: #94a3b8;">Your Feedback (Optional)</label>
                 <textarea name="feedback_text" style="width: 100%; height: 100px; padding: 10px; background: #0d1117; border: 1px solid #30363d; border-radius: 8px; color: white; resize: vertical;" placeholder="Share your thoughts about the event..."></textarea>
             </div>
-            
+
             <div style="margin-bottom: 20px;">
                 <label style="display: block; margin-bottom: 8px; color: #94a3b8;">Display Name</label>
                 <input type="text" name="display_name" style="width: 100%; padding: 10px; background: #0d1117; border: 1px solid #30363d; border-radius: 8px; color: white;" placeholder="Anonymous" value="<?php echo htmlspecialchars($username); ?>">
                 <small style="color: #6e7681;">This name will be shown with your review</small>
             </div>
-            
+
             <div style="margin-bottom: 20px;">
                 <label style="display: flex; align-items: center; gap: 10px; color: #94a3b8; cursor: pointer;">
                     <input type="checkbox" name="is_public" checked style="width: 18px; height: 18px;">
@@ -598,7 +598,7 @@ if (isset($_SESSION['error'])) {
                     If checked, other students can see your review
                 </small>
             </div>
-            
+
             <div style="display: flex; gap: 10px;">
                 <button type="submit" class="btn-primary" style="flex: 1;">Submit Feedback</button>
                 <button type="button" onclick="closeFeedbackModal()" style="flex: 1; background: #6e7681; color: white; border: none; border-radius: 8px; padding: 10px; cursor: pointer;">Cancel</button>
@@ -614,7 +614,7 @@ if (isset($_SESSION['error'])) {
             <h2 style="margin: 0; color: white;">Propose New Event</h2>
             <button onclick="closeProposalModal()" style="background: none; border: none; color: #94a3b8; font-size: 1.5rem; cursor: pointer;">×</button>
         </div>
-        
+
         <form id="proposalForm" method="POST" action="submit_event_proposal.php">
             <div style="margin-bottom: 15px;">
                 <label style="display: block; margin-bottom: 5px; color: #94a3b8;">Event Title</label>
@@ -642,7 +642,7 @@ if (isset($_SESSION['error'])) {
                     <input type="number" name="capacity" required style="width: 100%; padding: 10px; background: #0d1117; border: 1px solid #30363d; border-radius: 8px; color: white;">
                 </div>
             </div>
-            
+
             <div style="margin-bottom: 15px;">
                 <label style="display: block; margin-bottom: 5px; color: #94a3b8;">Description</label>
                 <textarea name="description" required style="width: 100%; height: 80px; padding: 10px; background: #0d1117; border: 1px solid #30363d; border-radius: 8px; color: white; resize: vertical;"></textarea>
@@ -663,7 +663,7 @@ if (isset($_SESSION['error'])) {
                     <input type="tel" name="contact_number" required style="width: 100%; padding: 10px; background: #0d1117; border: 1px solid #30363d; border-radius: 8px; color: white;">
                 </div>
             </div>
-            
+
             <div style="display: flex; gap: 10px;">
                 <button type="submit" class="btn-primary" style="flex: 1;">Submit Proposal</button>
                 <button type="button" onclick="closeProposalModal()" style="flex: 1; background: #6e7681; color: white; border: none; border-radius: 8px; padding: 10px; cursor: pointer;">Cancel</button>
@@ -685,9 +685,9 @@ function closeProposalModal() {
 // Handle Proposal Form Submission
 document.getElementById('proposalForm').addEventListener('submit', function(e) {
     e.preventDefault();
-    
+
     const formData = new FormData(this);
-    
+
     fetch('submit_event_proposal.php', {
         method: 'POST',
         body: formData
@@ -737,7 +737,7 @@ function closeFeedbackModal() {
 function setRating(rating) {
     // Set the rating value
     document.getElementById('ratingInput').value = rating;
-    
+
     // Update all stars
     for (let i = 1; i <= 5; i++) {
         const star = document.getElementById('star' + i);
@@ -749,7 +749,7 @@ function setRating(rating) {
             star.style.color = '#6e7681';
         }
     }
-    
+
     // Update rating text
     const texts = ['Click stars to rate', 'Poor', 'Fair', 'Good', 'Very Good', 'Excellent'];
     document.getElementById('ratingText').textContent = texts[rating];
@@ -759,14 +759,14 @@ function resetForm() {
     // Reset the form
     document.getElementById('feedbackForm').reset();
     document.getElementById('ratingInput').value = '';
-    
+
     // Reset stars
     for (let i = 1; i <= 5; i++) {
         const star = document.getElementById('star' + i);
         star.textContent = '☆';
         star.style.color = '#6e7681';
     }
-    
+
     // Reset rating text
     document.getElementById('ratingText').textContent = 'Click stars to rate';
 }
@@ -783,7 +783,7 @@ document.addEventListener('keydown', function(e) {
     if (e.key === 'Escape') {
         closeFeedbackModal();
     }
-});
+})
 </script>
 
 </body>

@@ -1,0 +1,8 @@
+{
+  "rewrite": [
+    {
+    "source": "/(.*)",
+    "destination": "forestgreen-dove-708420.hostingersite.com/$1"
+    }
+  ]
+}
