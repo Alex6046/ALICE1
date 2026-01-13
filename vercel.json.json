@@ -10,3 +10,4 @@
     { "src": "/ai_chat", "dest": "/api/ai_chat.php" }
   ]
 }
+
