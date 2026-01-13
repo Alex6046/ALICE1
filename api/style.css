@@ -1,0 +1,167 @@
+/* -------------------- BODY & ANIMATED BACKGROUND -------------------- */
+body {
+    margin: 0;
+    font-family: "Poppins", sans-serif;
+    color: white;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    position: relative;
+    min-height: 100vh;
+  }
+  
+  body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url("https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?auto=format&fit=crop&w=1600&q=80")
+      no-repeat center center / cover;
+    opacity: 0.2;
+    z-index: -1;
+    pointer-events: none;
+    animation: pan 60s linear infinite;
+  }
+  
+  @keyframes pan {
+    from {
+      background-position: 0% 50%;
+    }
+    to {
+      background-position: 100% 50%;
+    }
+  }
+  
+  /* Removed conflicting navbar styles - now handled in navbar.php component */
+  
+  /* -------------------- SECTIONS -------------------- */
+  section {
+    padding: 120px 40px 60px 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+    min-height: 60vh;
+  }
+  
+  .hero {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+  
+  .hero .welcome {
+    font-size: 2.8rem;
+    font-weight: 700;
+    color: #b8a7ff;
+    margin-bottom: 20px;
+  }
+  
+  /* -------------------- CARDS -------------------- */
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+  }
+  
+  .card {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 20px;
+    border-radius: 15px;
+    backdrop-filter: blur(10px);
+  }
+  
+  /* -------------------- POPUP -------------------- */
+  .overlay-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 900;
+    display: none;
+  }
+  
+  .welcome-popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    background: linear-gradient(135deg, #6f4aff, #9d8cff);
+    color: #fff;
+    width: 350px;
+    padding: 30px;
+    border-radius: 20px;
+    text-align: center;
+    z-index: 1000;
+    display: none;
+    opacity: 0;
+    transition: transform 0.4s ease, opacity 0.4s ease;
+  }
+  
+  .welcome-popup.show {
+    display: block;
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+  }
+  
+  .welcome-popup h2 {
+    margin-bottom: 10px;
+  }
+  
+  .welcome-popup button {
+    margin: 10px 5px 0 5px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+  }
+  
+  .logout-btn {
+    background: #ff6584;
+    color: #fff;
+  }
+  .logout-btn:hover {
+    background: #e05570;
+  }
+  .close-btn {
+    background: #fff;
+    color: #6c63ff;
+  }
+  .close-btn:hover {
+    background: #e0e0ff;
+  }
+  
+  /* -------------------- CONTACT FORM -------------------- */
+  form input,
+  form textarea,
+  form button {
+    width: 100%;
+    margin: 10px 0;
+    padding: 12px;
+    border-radius: 8px;
+    border: none;
+    outline: none;
+  }
+  
+  form input,
+  form textarea {
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+  }
+  
+  form button {
+    background: linear-gradient(90deg, #6f4aff, #9d8cff);
+    color: #fff;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+  
+  form button:hover {
+    transform: scale(1.05);
+    background: linear-gradient(90deg, #8a5cff, #b6a4ff);
+  }
+  
